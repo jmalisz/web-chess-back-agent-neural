@@ -8,34 +8,25 @@ import { logger, createLogMiddleware } from "./middlewares/createLogMiddleware.j
 import { RequestError } from "./models/RequestError.js";
 import { createErrorMiddleware } from "./middlewares/createErrorMiddleware.js";
 import { connectToNats } from "./events/connectToNats.js";
-import { registerServiceCalculateMove } from "./services/registerServiceCalculateNextMove.js";
 
 const app = express();
 
 app.use(helmet());
 app.use(express.json());
+app.use(createLogMiddleware());
+app.use(createErrorMiddleware());
 
 app.get(SERVICE_PATH, (_req, res) => {
   res.send("OK");
 });
-
 app.all("*", () => {
   throw new RequestError({ httpStatus: 404, code: "GENERAL", subcode: "NOT_FOUND" });
 });
-
-app.use(createLogMiddleware());
-app.use(createErrorMiddleware());
-
-const eventHandlers = await connectToNats();
 const httpServer = app.listen(3000, () => {
   logger.info("Express server is running at port 3000");
 });
 
-registerServiceCalculateMove({
-  listenCalculateMoveEngineStrength: eventHandlers.listenCalculateMoveEngineStrength,
-  listenCalculateMoveEvaluation: eventHandlers.listenCalculateMoveEvaluation,
-  emitMoveCalculated: eventHandlers.emitMoveCalculated,
-});
+void connectToNats();
 
 /* eslint-disable unicorn/no-process-exit */
 const gracefulShutdown = () => {
@@ -51,7 +42,6 @@ const gracefulShutdown = () => {
   process.exit(1);
 };
 /* eslint-enable unicorn/no-process-exit */
-
 process.on("uncaughtException", (err) => {
   logger.fatal(err, "Uncaught exception");
   gracefulShutdown();
