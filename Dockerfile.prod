@@ -30,6 +30,6 @@ COPY --from=build /app/dist ./dist
 
 ENV NODE_ENV="production"
 ENV SERVICE_PATH="/api/agent/neural"
-ENV NATS_URL="nats:4442"
+ENV NATS_URL="nats:4222"
 
 CMD [ "pnpm", "start" ]
