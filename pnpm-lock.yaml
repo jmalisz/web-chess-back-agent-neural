@@ -97,6 +97,9 @@ devDependencies:
   lint-staged:
     specifier: ^13.2.3
     version: 13.3.0
+  onnxruntime-common:
+    specifier: ^1.18.0
+    version: 1.18.0
   pino-pretty:
     specifier: ^10.2.0
     version: 10.3.1
@@ -3232,7 +3235,6 @@ packages:
 
   /onnxruntime-common@1.18.0:
     resolution: {integrity: sha512-lufrSzX6QdKrktAELG5x5VkBpapbCeS3dQwrXbN0eD9rHvU0yAWl7Ztju9FvgAKWvwd/teEKJNj3OwM6eTZh3Q==}
-    dev: false
 
   /onnxruntime-node@1.18.0:
     resolution: {integrity: sha512-iTnFcxKpmywCatx8ov4GTbECe3tJk2Bp1OA2mWRJde78q+7tpPYBhKMnwhlaoKy9oKQcy4UoEuuhoy2PSD13ww==}

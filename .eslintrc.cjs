@@ -31,7 +31,9 @@ module.exports = {
     "import/no-default-export": "warn",
     "import/no-extraneous-dependencies": [
       "error",
-      { devDependencies: ["**/*.spec.*", "vite.config.ts"] },
+      {
+        devDependencies: ["vite.config.ts", "**/*.spec.*", "**/*.d.*"],
+      },
     ],
     "import/prefer-default-export": "off",
     "no-relative-import-paths/no-relative-import-paths": [

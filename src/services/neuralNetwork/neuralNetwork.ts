@@ -1,6 +1,6 @@
 import path from "node:path";
 
-import ort from "onnxruntime-node/lib/index.js";
+import ort from "onnxruntime-node";
 
 const NN_MODEL_PATH = path.join(process.cwd(), "src", "services", "neuralNetwork", "model.onnx");
 
