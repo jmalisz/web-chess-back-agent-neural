@@ -26,7 +26,7 @@ const httpServer = app.listen(3000, () => {
   logger.info("Express server is running at port 3000");
 });
 
-void connectToNats();
+await connectToNats();
 
 /* eslint-disable unicorn/no-process-exit */
 const gracefulShutdown = () => {
