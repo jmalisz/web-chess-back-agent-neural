@@ -11,6 +11,10 @@ export type CallbackProps = {
   jsonCodec: Codec<unknown>;
   message: Msg;
 };
+export type EmitterFactoryProps = {
+  natsClient: NatsConnection;
+  jsonCodec: Codec<unknown>;
+};
 
 type RegisterEventListenerProps = {
   natsClient: NatsConnection;
@@ -39,14 +43,16 @@ export const connectToNats = async () => {
     const natsClient = await connect({ servers: NATS_URL, waitOnFirstConnect: true });
     decorateNatsCommunication(natsClient, jsonCodec);
 
-    await Promise.all([
+    void Promise.all([
       registerEventListener({
         natsClient,
         jsonCodec,
         subject: "agent.neuralNetwork.calculateMove",
         callback: calculateMoveFactory(),
       }),
-    ]);
+    ]).catch((error) => {
+      logger.error(error);
+    });
   } catch (error) {
     logger.error(error);
 
